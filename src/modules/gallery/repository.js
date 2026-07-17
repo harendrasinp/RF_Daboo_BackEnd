@@ -30,7 +30,7 @@ class galleryRepository {
     async EditdropdowItem(oldName, newName) {
 
         await DropDownitemModel.findOneAndUpdate(
-            { DropDownItem: oldName },
+            { DropDownItem: oldName.toUpperCase()},
             { $set: { DropDownItem: newName.toUpperCase() } }
         );
 
@@ -39,7 +39,7 @@ class galleryRepository {
             { $set: { EventName: newName.toUpperCase() } }
         );
 
-        return true;
+        return await DropDownitemModel.find();
     }
     async DeleteEvent(eventName) {
         const EventResponse = await DropDownitemModel.deleteOne({ DropDownItem: eventName })

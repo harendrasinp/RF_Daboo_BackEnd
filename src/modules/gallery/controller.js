@@ -39,8 +39,9 @@ class galleryController {
         try{
             const{oldName,newName}=req.body
             const response=await galleryRepository.EditdropdowItem(oldName,newName)
+            res.status(200).json({success:true,data:response})
         }catch(error){
-
+            res.status(400).json({success:false,message:"Something Went Wrong"})
         }
     }
     async DeleteEvent(req,res){
