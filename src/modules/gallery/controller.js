@@ -1,0 +1,104 @@
+import { json } from "express";
+import galleryRepository from "../gallery/repository.js"
+class galleryController {
+    async dropDownItem(req, res) {
+        try {
+            const { itemName } = req.body
+            const response = await galleryRepository.addtListItem({ itemName })
+            return res.status(200).json({ success: true, message: "New Function Added" })
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+    async uploadImage(req, res) {
+        try {
+            const { category, year } = req.body
+            if (!req.file || !category || !year) {
+                return res.status(400).json({ success: false, message: "Upload Image and Fill All Fields" })
+            }
+            const { path } = req.file;
+            const response=await galleryRepository.uploadCloudinary({ category, year, path })
+            return res.status(200).json({ success: true, message: "Image Uploaded Successfuly",responseData:response })
+
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message })
+        }
+    }
+    async getDropDownList(req, res) {
+        try {
+            const response = await galleryRepository.getDropDownList()
+            return res.status(200).json({ success: true, data: response })
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message })
+        }
+    }
+    async EditdropdowItem(req,res){
+        try{
+            const{oldName,newName}=req.body
+            const response=await galleryRepository.EditdropdowItem(oldName,newName)
+        }catch(error){
+
+        }
+    }
+    async DeleteEvent(req,res){
+        try{
+            const {eventName}=req.body
+            console.log(eventName)
+            const response=await galleryRepository.DeleteEvent(eventName)
+            return res.status(200).json(response)
+        }catch(error){
+            return res.status(500).json({success:false,message:error.message})
+        }
+    }
+    async getImageData(req, res) {
+        try {
+            const response = await galleryRepository.getImageData()
+            return res.status(200).json({ success: true, EventData: response })
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message })
+        }
+    }
+    async getFunctionYear(req, res) {
+        try {
+            const { EventName } = req.params
+            const response = await galleryRepository.getFunctionYear(EventName)
+            return res.status(200).json({ success: true, YearData: response })
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message })
+        }
+    }
+    async getYearImage(req, res) {
+        try {
+            const { EventName, selecterYear } = req.body
+            if (!EventName || !selecterYear) {
+                return res.status(400).json({ success: false, message: "Please Provide Event Name and Year" })
+            }
+            const response = await galleryRepository.getYearImage(EventName, selecterYear)
+            return res.status(200).json({ success: true, data: response })
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message })
+        }
+    }
+    async getEditImages(req, res) {
+        try {
+            const{EditCategory,EditYear} = req.body
+            const response = await galleryRepository.getEditImages(EditCategory, EditYear)
+            return res.status(200).json({ success: true, data: response })
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message })
+        }
+    }
+    async deleteImage(req,res){
+        try{
+            const{imageId}=req.params
+            const response=await galleryRepository.deleteImage(imageId)
+            return res.status(200).json({ success: true, message: "Image Deleted Successfully",data:response })
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message })
+        }
+    }
+}
+export default new galleryController()
