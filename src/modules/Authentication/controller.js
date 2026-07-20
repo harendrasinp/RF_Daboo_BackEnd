@@ -49,7 +49,7 @@ class Authentication_Controller {
 
         }
         catch (error) {
-            return error.message
+            return res.status(400).json({success:false,message:"Somthing went wrong"})
         }
     }
 // -----------------------------Admin Logout----------------------------------------------------------------
