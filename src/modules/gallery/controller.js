@@ -47,7 +47,6 @@ class galleryController {
     async DeleteEvent(req,res){
         try{
             const {eventName}=req.body
-            console.log(eventName)
             const response=await galleryRepository.DeleteEvent(eventName)
             return res.status(200).json(response)
         }catch(error){
