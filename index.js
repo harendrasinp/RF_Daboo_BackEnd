@@ -5,6 +5,7 @@ import cors from "cors"
 import AuthRouter from "./src/modules/Authentication/routers.js"
 import AboutRouter from "./src/modules/aboutUs/router.js"
 import GalleryRouter from "./src/modules/gallery/router.js"
+import ContactRouter from "./src/modules/contact/router.js"
 const app = express()
 
 app.use(cors({
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/admin",AuthRouter)
 app.use("/admin",AboutRouter)
 app.use("/admin",GalleryRouter)
+app.use("/admin",ContactRouter)
 
 
 export default app
