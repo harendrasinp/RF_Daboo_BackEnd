@@ -6,7 +6,7 @@ import GalleryRouter from "./src/modules/gallery/router.js"
 const app = express()
 
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://192.168.31.136:3000'],
+    origin: ['http://localhost:3000', 'http://192.168.31.136:3000','https://r-f-daboo-frontend.vercel.app/'],
     credentials: true
 })) 
 
