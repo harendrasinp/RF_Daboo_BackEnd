@@ -6,8 +6,10 @@ import AuthRouter from "./src/modules/Authentication/routers.js"
 import AboutRouter from "./src/modules/aboutUs/router.js"
 import GalleryRouter from "./src/modules/gallery/router.js"
 import ContactRouter from "./src/modules/contact/router.js"
+import cookieParser from "cookie-parser";
 const app = express()
 
+app.use(cookieParser());
 app.use(cors({
     origin: ['http://localhost:3000', 'http://192.168.31.136:3000',"https://r-f-daboo-frontend.vercel.app"],
     credentials: true

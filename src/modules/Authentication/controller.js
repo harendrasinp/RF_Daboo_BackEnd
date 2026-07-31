@@ -2,7 +2,7 @@ import AuthenticationRepository from "./repository.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken";
 class Authentication_Controller {
-// ---------------------------------------------------Admin Registration---------------------------------
+    // ---------------------------------------------------Admin Registration---------------------------------
     async AdminRegistration(req, res) {
         try {
             const { username, password, email, } = req.body
@@ -26,7 +26,7 @@ class Authentication_Controller {
             res.status(500).json({ message: 'Server error', error: error.message });
         }
     }
-// -------------------------------------Admin Login----------------------------------------------------------
+    // -------------------------------------Admin Login----------------------------------------------------------
     async AdminLogin(req, res) {
         try {
             const { email, password } = req.body
@@ -39,24 +39,23 @@ class Authentication_Controller {
                 { expiresIn: "1hr" })
             res.cookie("token", token, {
                 httpOnly: true,
-                secure: true,  // it is for local host
-                // secure: false // it is for https
-                sameSite: "lax",
-                maxAge: 24 * 60 * 60 * 1000
-            })
+                secure: true,
+                sameSite: "none",
+                maxAge: 24 * 60 * 60 * 1000,
+            });
             return res.status(200).json({ success: true, message: "Login Successful", responseData })
 
 
         }
         catch (error) {
-            return res.status(400).json({success:false,message:"Somthing went wrong"})
+            return res.status(400).json({ success: false, message: "Somthing went wrong" })
         }
     }
-// -----------------------------Admin Logout----------------------------------------------------------------
+    // -----------------------------Admin Logout----------------------------------------------------------------
     async AdminLogout(req, res) {
         res.clearCookie("token", {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: "lax",
         });
         return res.status(200).json({
