@@ -9,7 +9,7 @@ import ContactRouter from "./src/modules/contact/router.js"
 const app = express()
 
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://192.168.31.136:3000','https://r-f-daboo-frontend.vercel.app/'],
+    origin: ['http://localhost:3000', 'http://192.168.31.136:3000',"https://r-f-daboo-frontend.vercel.app/"],
     credentials: true
 })) 
 
