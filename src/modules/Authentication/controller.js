@@ -51,7 +51,7 @@ class Authentication_Controller {
             return res.status(400).json({ success: false, message: "Somthing went wrong" })
         }
     }
-    // -----------------------------Admin Logout----------------------------------------------------------------
+    // --------------------------Admin Logout-------------------------------------------------------
     async AdminLogout(req, res) {
         res.clearCookie("token", {
             httpOnly: true,
@@ -62,6 +62,20 @@ class Authentication_Controller {
             success: true,
             message: "Logged out successfully",
         });
+    }
+    // -----------------------admi Dashboard-----------------------------------------
+    async AdminDashboard(req, res) {
+        try {
+            return res.status(200).json({
+                success: true,
+                admin: req.adminData,
+            });
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: "Server Error",
+            });
+        }
     }
 
 }

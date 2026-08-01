@@ -4,8 +4,8 @@ import authMiddleware from "../../middleware/authMiddleware.js"
 
 
 const AuthRouter=express.Router()
-
-AuthRouter.post("/Register",authMiddleware,Authentication_Controller.AdminRegistration)
+AuthRouter.get("/dashboard",authMiddleware,Authentication_Controller.AdminDashboard);
+AuthRouter.post("/Register",Authentication_Controller.AdminRegistration)
 AuthRouter.post("/Login",Authentication_Controller.AdminLogin)
-AuthRouter.post("/Logout",authMiddleware,Authentication_Controller.AdminLogout)
+AuthRouter.post("/Logout",Authentication_Controller.AdminLogout)
 export default AuthRouter
