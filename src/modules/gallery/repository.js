@@ -30,7 +30,7 @@ class galleryRepository {
     async EditdropdowItem(oldName, newName) {
 
         await DropDownitemModel.findOneAndUpdate(
-            { DropDownItem: oldName.toUpperCase()},
+            { DropDownItem: oldName.toUpperCase() },
             { $set: { DropDownItem: newName.toUpperCase() } }
         );
 
@@ -46,12 +46,37 @@ class galleryRepository {
         if (EventResponse.deletedCount === 0) {
             throw new Error("Event Not Deleted")
         }
+        const result = await cloudinary.uploader.destroy(imagedata.cloudinary_id);
         const EventDataResponse = await galleryModel.deleteMany({ EventName: eventName })
         return { success: true, message: "Event Deleted with all Images" }
     }
-    async getImageData() {
+    async getEventTitle() {
         const response = await galleryModel.distinct("EventName")
         return response
+    }
+    async getTitleImage() {
+        const response = await galleryModel.aggregate([
+            {
+                $sort: { createdAt: -1 } // Sabse latest record pehle
+            },
+            {
+                $group: {
+                    _id: "$EventName",
+                    Image: { $first: "$Image" },
+                    Year: { $first: "$Year" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    EventName: "$_id",
+                    Image: 1,
+                    Year: 1
+                }
+            }
+        ]);
+
+        return response;
     }
     async getFunctionYear(EventName) {
         const response = await galleryModel.distinct("Year", { EventName: EventName })

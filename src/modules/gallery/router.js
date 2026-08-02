@@ -5,7 +5,8 @@ import authMiddleware from "../../middleware/authMiddleware.js"
 const GalleryRouter = express.Router()
 
 
-GalleryRouter.get("/getImageData",galleryController.getImageData)
+GalleryRouter.get("/getEventTitle",galleryController.getEventTitle)
+GalleryRouter.get("/getTitleImage",galleryController.getTitleImage)
 GalleryRouter.get("/getDropDownList",galleryController.getDropDownList)
 GalleryRouter.get("/getYear/:EventName",galleryController.getFunctionYear)
 GalleryRouter.post("/getYearImage",galleryController.getYearImage)

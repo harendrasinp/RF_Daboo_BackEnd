@@ -53,9 +53,17 @@ class galleryController {
             return res.status(500).json({success:false,message:error.message})
         }
     }
-    async getImageData(req, res) {
+    async getEventTitle(req, res) {
         try {
-            const response = await galleryRepository.getImageData()
+            const response = await galleryRepository.getEventTitle()
+            return res.status(200).json({ success: true, EventData: response })
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message })
+        }
+    }
+    async getTitleImage(req, res) {
+        try {
+            const response = await galleryRepository.getTitleImage()
             return res.status(200).json({ success: true, EventData: response })
         } catch (error) {
             return res.status(500).json({ success: false, message: error.message })
