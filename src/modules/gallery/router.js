@@ -8,7 +8,7 @@ const GalleryRouter = express.Router()
 GalleryRouter.get("/getEventTitle",galleryController.getEventTitle)
 GalleryRouter.get("/getTitleImage",galleryController.getTitleImage)
 GalleryRouter.get("/getDropDownList",galleryController.getDropDownList)
-GalleryRouter.get("/getYear/:EventName",galleryController.getFunctionYear)
+GalleryRouter.get("/gallery/:event",galleryController.getYears)
 GalleryRouter.post("/getYearImage",galleryController.getYearImage)
 
 GalleryRouter.post("/uploadImage",upload.single("image"),authMiddleware,galleryController.uploadImage)

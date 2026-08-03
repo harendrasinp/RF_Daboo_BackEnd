@@ -12,7 +12,8 @@ class galleryRepository {
         return response
     }
     async uploadCloudinary(uploadData) {
-        const response = await uploadOnCloudinary(uploadData.path)
+        console.log(uploadData.path)
+        const response = await uploadOnCloudinary(uploadData.path, uploadData.category)
         const dbResponse = await galleryModel.create(
             {
                 EventName: uploadData.category,
@@ -46,7 +47,6 @@ class galleryRepository {
         if (EventResponse.deletedCount === 0) {
             throw new Error("Event Not Deleted")
         }
-        const result = await cloudinary.uploader.destroy(imagedata.cloudinary_id);
         const EventDataResponse = await galleryModel.deleteMany({ EventName: eventName })
         return { success: true, message: "Event Deleted with all Images" }
     }
@@ -78,9 +78,42 @@ class galleryRepository {
 
         return response;
     }
-    async getFunctionYear(EventName) {
-        const response = await galleryModel.distinct("Year", { EventName: EventName })
-        return response
+    async getYears(EventName) {
+        const response = await galleryModel.aggregate([
+            {
+                $match: {
+                    EventName: EventName
+                }
+            },
+            {
+                $sort: {
+                    createdAt: -1
+                }
+            },
+            {
+                $group: {
+                    _id: "$Year",
+                    Image: { $first: "$Image" },
+                    Year: { $first: "$Year" },
+                    EventName: { $first: "$EventName" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    Year: 1,
+                    Image: 1,
+                    EventName: 1
+                }
+            },
+            {
+                $sort: {
+                    Year: -1
+                }
+            }
+        ]);
+
+        return response;
     }
     async getYearImage(EventName, selecterYear) {
         const response = await galleryModel.find({ EventName: EventName, Year: selecterYear })

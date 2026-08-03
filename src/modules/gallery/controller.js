@@ -69,10 +69,10 @@ class galleryController {
             return res.status(500).json({ success: false, message: error.message })
         }
     }
-    async getFunctionYear(req, res) {
+    async getYears(req, res) {
         try {
-            const { EventName } = req.params
-            const response = await galleryRepository.getFunctionYear(EventName)
+            const eventName = decodeURIComponent(req.params.event);
+            const response = await galleryRepository.getYears(eventName)
             return res.status(200).json({ success: true, YearData: response })
         } catch (error) {
             return res.status(500).json({ success: false, message: error.message })
